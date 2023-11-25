@@ -1,4 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
 *{
   margin: 0;
   padding: 0;
 }
+:root{
+  --text-color:#E2E8F0;
+}
+h1, h2, h3, h4, h5, h6, p, span, div{
+  color:var(--text-color)
+}
+
+/*==================== BACKGROUND STYLEING CSS START===========================  */
+
+.full-page-wrapper{
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('./assets/square.png');
+  overflow: hidden;
+}
+.home{
+  position: relative;
+  min-height:100vh;
+  width:100%;
+}
+.shape{
+  position: absolute;
+}
+.square-shape{
+    background-color: #781f57;
+    border-radius: 0%;
+    -webkit-filter: blur(40px);
+    position: absolute;
+    width: 100px;
+    height: 300px;
+    right: 0%;
+    rotate: 45deg;
+    opacity: .5;
+    bottom:-10%;
+}
+.circle-shape{
+    background-color: #2a0c96;
+    border-radius: 0%;
+    -webkit-filter: blur(65px);
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    opacity: .5;
+  left:-10%;
+  top:-30%;
+  border-radius: 50%;
+}
+.circle-shape-2{
+    background-color: #357483;
+    border-radius: 0%;
+    -webkit-filter: blur(65px);
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    opacity: .5;
+  right:-10%;
+  top:-40%;
+  border-radius: 50%;
+}
+
+/*==================== BACKGROUND STYLEING CSS END===========================  */
+
+/* ================== HOME CONTENT CSS START ================ */
+
+.content-wrapper h2{
+  font-family: 'Pixelify Sans', sans-serif;
+}
+.prograss-bar{
+  /* background: linear-gradient(to-right , #502a67, #2a1e2f 100%); */
+  background: linear-gradient(68.3deg, rgb(23, 41, 77) 6.3%, #781f57 90.9%);
+
+}
+.uploaded-item{
+  background-color: rgb(39, 49, 73);
+  border: 2px solid #606770;
+}
+.add-text-wrapper .add-text-form input{
+  height:3.2rem;
+  background-color: #334155;
+}
+.add-text-wrapper .add-text-form button{
+  background-color: #3a81d8;
+}
+
+
+
+
+
