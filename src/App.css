@@ -24,6 +24,7 @@ h1, h2, h3, h4, h5, h6, p, span, div{
   min-height:100vh;
   width:100%;
 }
+
 .shape{
   position: absolute;
 }
@@ -37,7 +38,7 @@ h1, h2, h3, h4, h5, h6, p, span, div{
     right: 0%;
     rotate: 45deg;
     opacity: .5;
-    bottom:-10%;
+    bottom:-15%;
 }
 .circle-shape{
     background-color: #2a0c96;
@@ -86,6 +87,7 @@ h1, h2, h3, h4, h5, h6, p, span, div{
 }
 .add-text-wrapper .add-text-form button{
   background-color: #3a81d8;
+  height: 3.2rem;
 }
 
 
@@ -117,3 +119,104 @@ canvas, .konvajs-content, #container{
   max-width: 1200px;
   margin:0 auto;
 }
+
+
+
+/* ================== RESPONSIVE CSS GOSE HERE ========================= */
+
+@media screen and (min-width:1500px) {
+  .home .content-wrapper{
+    max-width: 1200px;
+  }
+}
+@media screen and (max-width:900px) {
+  .circle-shape{
+    top: -50%;
+    left:-20%;
+  }
+  .circle-shape-2{
+    top: -50%;
+    right:-20%;
+  }
+}
+@media screen and (max-width:640px) {
+  .circle-shape{
+    top: -70%;
+    left:-20%;
+  }
+  .circle-shape-2{
+    top: -70%;
+    right:-20%;
+  }
+  .content-wrapper h2{
+    font-size: 1.5rem;
+  }
+  .successful-text{
+    display: none;
+  }
+  .upload-box, .uploaded-item{
+    padding:8px!important;
+  }
+  .uploaded-item button{
+    padding:1px 8px!important;
+  }
+  .add-text-wrapper .add-text-form input, .add-text-wrapper .add-text-form button{
+    height: 2.6rem;
+  }
+}
+@media screen and (min-width:1px) and (max-width:450px) {
+  .circle-shape{
+    top: -70%;
+    left:-20%;
+  }
+  .circle-shape-2{
+    top: -70%;
+    right:-20%;
+  }
+  .content-wrapper h2{
+    font-size: 1.5rem;
+  }
+  .successful-text{
+    display: none;
+  }
+  .upload-box, .uploaded-item{
+    padding:8px!important;
+  }
+  .uploaded-item button{
+    padding:1px 8px!important;
+  }
+  .add-text-wrapper .add-text-form input, .add-text-wrapper .add-text-form button{
+    height: 2.6rem;
+  }
+  .pdf-file-wrapper, .text-add-wrapper{
+    margin-left:1rem!important;
+    margin-right:1rem!important;
+    margin-top:1.5rem!important;
+    margin-bottom:1.5rem!important;
+  }
+  .add-text-wrapper .add-text-form button{
+    padding-left:1rem;
+    padding-right:1rem;
+  }
+  .content-wrapper{
+    padding-top:1rem!important;
+  }
+  .square-shape{
+    bottom: -40%;
+  }
+  .text-add-wrapper .add-text-wrapper, .text-add-wrapper ul{
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+

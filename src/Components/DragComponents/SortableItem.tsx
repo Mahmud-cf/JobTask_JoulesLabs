@@ -25,7 +25,7 @@ const SortableItem = ({ item, onDelete, ...props }: Props) => {
     <Item
       item={item}
       onDelete={onDelete}
-      isDragging={isDragging} // Pass the isDragging prop
+      isDragging={isDragging} 
       style={styles}
       ref={setNodeRef}
       {...props}

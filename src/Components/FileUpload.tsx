@@ -1,11 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone, DropzoneRootProps } from "react-dropzone";
 import upload_img from "../assets/upload.png";
 import useLocalStorage from "./LocalStorage";
 
+
 const FileUpload: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useLocalStorage<{ filename: string; size: number }[]>('uploadedFiles', []);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -27,7 +29,7 @@ const FileUpload: React.FC = () => {
         setUploadProgress((prevProgress) =>
           prevProgress !== null ? prevProgress + 10 : 10
         );
-      }, 500);
+      }, 300);
 
       setTimeout(() => {
         clearInterval(interval);
@@ -43,7 +45,7 @@ const FileUpload: React.FC = () => {
         const updatedFiles = [...uploadedFiles, fileInfo];
         setUploadedFiles(updatedFiles);
         setUploadProgress(null); 
-      }, 1500);
+      }, 2000);
     } catch (error) {
       console.error("Error uploading file", error);
     }
@@ -63,13 +65,14 @@ const FileUpload: React.FC = () => {
     accept: "image/*",
   });
 
+
   return (
     <div className="pdf-file-wrapper mt-12 mx-14">
       <div
         {...getRootProps()}
-        className="border-2 cursor-pointer flex justify-center items-center border-dashed border-gray-300 p-4 mb-4"
+        className="upload-box border-2 cursor-pointer flex justify-center items-center border-dashed border-gray-300 p-4 mb-4"
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()}/>
         <img
           src={upload_img}
           alt=""
@@ -103,7 +106,7 @@ const FileUpload: React.FC = () => {
         >
           <div className="flex">
             <span className="mr-2">{index + 1}: </span>
-            <p className="text-green-600">File uploaded successfully:</p>
+            <p className="successful-text text-green-600">File uploaded successfully:</p>
             <p className="ml-2">{file.filename}</p>
           </div>
           <button

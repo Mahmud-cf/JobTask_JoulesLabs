@@ -85,7 +85,7 @@ const TextAdd: React.FC = () => {
 
 
   return (
-    <div>
+    <div className="text-add-wrapper" >
       <div className="add-text-wrapper mt-12 mx-14 border-2 items-center border-dashed border-gray-300 p-2 mb-4">
         <div className="add-text-form flex">
           <input

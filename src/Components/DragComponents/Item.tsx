@@ -21,7 +21,6 @@ const Item = forwardRef<HTMLDivElement, Props>(
 
     const handleDelete = (event: MouseEvent) => {
       if (event.button === 0) {
-        // Only trigger the delete action for the left mouse button (primary button)
         onDelete(item.id);
       }
     };
@@ -45,7 +44,6 @@ const Item = forwardRef<HTMLDivElement, Props>(
             {item.text}
           </span>
         </div>
-        {/* Render delete button */}
         <button onMouseDown={handleDelete} className="bg-red-500 text-white px-5 py-1 rounded">Delete</button>
       </li>
     );
