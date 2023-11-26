@@ -19,18 +19,16 @@ const FileUpload: React.FC = () => {
     const formData = new FormData();
     formData.append("file", file);
 
+    // FILE UPLOAD PROCESS
     try {
-      // Simulating file upload progress
       setUploadProgress(0);
 
-      // Simulate upload progress
       const interval = setInterval(() => {
         setUploadProgress((prevProgress) =>
           prevProgress !== null ? prevProgress + 10 : 10
         );
       }, 500);
 
-      // Simulate file upload success
       setTimeout(() => {
         clearInterval(interval);
         setUploadProgress(100);
@@ -44,8 +42,8 @@ const FileUpload: React.FC = () => {
         // Update existing files array
         const updatedFiles = [...uploadedFiles, fileInfo];
         setUploadedFiles(updatedFiles);
-        setUploadProgress(null); // Reset progress bar
-      }, 500);
+        setUploadProgress(null); 
+      }, 1500);
     } catch (error) {
       console.error("Error uploading file", error);
     }

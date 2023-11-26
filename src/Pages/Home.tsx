@@ -1,9 +1,7 @@
 import React from 'react'
-import BgAnimation from '../Components/BgAnimation'
-import FileUploader from '../Components/PdfTest'
-import TextAdd from '../Components/TextAdd'
 import FileUpload from '../Components/FileUpload'
-import TestAddText from '../Components/TestAddText'
+import TextAdd from '../Components/TextAdd'
+import BgAnimation from '../Components/BgAnimation'
 
 function Home() {
   return (
@@ -13,14 +11,12 @@ function Home() {
             <div className="circle-shape shape"></div>
             <div className="circle-shape-2 shape"></div>
         </div>
-        {/* <BgAnimation/> */}
+        <BgAnimation/>
         <div className="container m-auto pt-8 content-wrapper">
             <h2 className='text-center text-inherit text-4xl' >Upload you File/ Image/ Text</h2>
             <div className="uploader-container">
-                {/* <FileUploader/> */}
                 <FileUpload/>
-                {/* <TextAdd/> */}
-                <TestAddText/>
+                <TextAdd/>
             </div>
         </div>
     </div>

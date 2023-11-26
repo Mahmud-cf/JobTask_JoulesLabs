@@ -1,14 +1,24 @@
-// TextAdd.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useLocalStorage from "./LocalStorage";
 import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "react-beautiful-dnd";
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragStartEvent,
+  DragEndEvent,
+  TouchSensor,
+  closestCenter,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import SortableItem from "./DragComponents/SortableItem";
 
-type Todo = {
+export type Todo = {
   id: number;
   text: string;
   completed: boolean;
@@ -33,109 +43,84 @@ const TextAdd: React.FC = () => {
     setNewTodo("");
   };
 
-  const toggleTodo = (id: number) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    );
-    setTodos(updatedTodos);
-  };
-
   const deleteTodo = (id: number) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
   };
 
-  // const recorder = (list, startIndex, endIndex) => {
-  //   const result = Array.from(list)
-  //   const [removed] = result.splice(startIndex, 1)
-  //   result.splice(endIndex, 0, removed)
 
-  //   return result
-  // }
+  // =============USE REACT-DND ==================
 
-  // const onDragEnd = (result) => {
-  //   if (!result.destination) {
-  //     return;
-  //   }
-  //   const recordedItems = recorder()
-  // };
+  const [activeItem, setActiveItem] = useState<Todo>();
+  const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
 
-  const onDragEnd = (result: any) => {
-    if (!result.destination) {
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    setActiveItem(todos.find((item) => item.id === active.id));
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeItem = todos.find((item) => item.id === active.id);
+    const overItem = todos.find((item) => item.id === over.id);
+
+    if (!activeItem || !overItem) {
       return;
     }
 
-    const updatedTodos = Array.from(todos);
-    const [reorderedItem] = updatedTodos.splice(result.source.index, 1);
-    updatedTodos.splice(result.destination.index, 0, reorderedItem);
+    const activeIndex = todos.findIndex((item) => item.id === active.id);
+    const overIndex = todos.findIndex((item) => item.id === over.id);
 
-    setTodos(updatedTodos);
+    if (activeIndex !== overIndex) {
+      setTodos((prev) => arrayMove<Todo>(prev, activeIndex, overIndex));
+    }
+    setActiveItem(undefined);
   };
 
-  return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div>
-        <div className="add-text-wrapper mt-12 mx-14 border-2 items-center border-dashed border-gray-300 p-2 mb-4">
-          <div className="add-text-form flex ">
-            <input
-              type="text"
-              value={newTodo}
-              onChange={(e) => setNewTodo(e.target.value)}
-              placeholder="Add Your Text"
-              className="flex-grow p-2 py-1 rounded-l-md focus:outline-none"
-            />
-            <button
-              onClick={addTodo}
-              className="bg-blue-500 text-white p-2 px-6 rounded-r-md hover:bg-blue-600 focus:outline-none font-medium"
-            >
-              Add Text
-            </button>
-          </div>
-        </div>
-        <Droppable droppableId="droppable">
-          {(provided) => (
-            <ul
-              className="mt-4 mx-14"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {todos.map((todo, index) => (
-                <Draggable draggableId={todo.id.toString()} key={todo.id.toString()} index={index}>
+  const handleDragCancel = () => {
+    setActiveItem(undefined);
+  };
 
-                  {(provided)=> (
-                    <li className="uploaded-item flex justify-between items-center p-4 rounded mb-4"
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    >
-                    <div className="flex items-center">
-                      <span className="mr-2">{index + 1}: </span>
-                      <span
-                        style={{
-                          textDecoration: todo.completed
-                            ? "line-through"
-                            : "none",
-                        }}
-                        className={todo.completed ? "text-gray-500" : ""}
-                      >
-                        {todo.text}
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => deleteTodo(todo.id)}
-                      className="bg-red-500 text-white px-5 py-1 rounded"
-                    >
-                      Delete
-                    </button>
-                  </li>
-                  )}
-                </Draggable>
-              ))}
-            </ul>;
-  )}
-        </Droppable>
+
+  return (
+    <div>
+      <div className="add-text-wrapper mt-12 mx-14 border-2 items-center border-dashed border-gray-300 p-2 mb-4">
+        <div className="add-text-form flex">
+          <input
+            type="text"
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+            placeholder="Add Your Text"
+            className="flex-grow p-2 py-1 rounded-l-md focus:outline-none"
+          />
+          <button
+            onClick={addTodo}
+            className="bg-blue-500 text-white p-2 px-6 rounded-r-md hover:bg-blue-600 focus:outline-none font-medium"
+          >
+            Add Text
+          </button>
+        </div>
       </div>
-    </DragDropContext>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <SortableContext items={todos} strategy={rectSortingStrategy}>
+          <ul className="mt-4 mx-14">
+            {todos.map((item) => (
+              <div key={item.id} >
+                <SortableItem item={item} onDelete={deleteTodo} />
+              </div>
+            ))}
+          </ul>
+        </SortableContext>
+      </DndContext>
+    </div>
   );
 };
 
