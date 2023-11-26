@@ -3,7 +3,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { HTMLAttributes } from "react";
-import { Todo } from "../TestAddText";
+import { Todo } from "../TextAdd";
 import Item from "./Item";
 
 type Props = {

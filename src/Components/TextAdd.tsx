@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import useLocalStorage from "./LocalStorage";
 import {
   DndContext,
-  DragOverlay,
   PointerSensor,
   useSensor,
   useSensors,
@@ -58,6 +57,8 @@ const TextAdd: React.FC = () => {
     const { active } = event;
     setActiveItem(todos.find((item) => item.id === active.id));
   };
+
+  console.log(activeItem)
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;

@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDropzone, DropzoneRootProps } from "react-dropzone";
 import upload_img from "../assets/upload.png";
 import useLocalStorage from "./LocalStorage";
-
 
 const FileUpload: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useLocalStorage<{ filename: string; size: number }[]>('uploadedFiles', []);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
-
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
 
     const maxSize = 1024 * 1024; 
@@ -44,7 +42,7 @@ const FileUpload: React.FC = () => {
         // Update existing files array
         const updatedFiles = [...uploadedFiles, fileInfo];
         setUploadedFiles(updatedFiles);
-        setUploadProgress(null); 
+        setUploadProgress(null);
       }, 2000);
     } catch (error) {
       console.error("Error uploading file", error);
@@ -60,11 +58,12 @@ const FileUpload: React.FC = () => {
   const {
     getRootProps,
     getInputProps,
-  }: { getRootProps: DropzoneRootProps; getInputProps: any } = useDropzone({
-    onDrop,
-    accept: "image/*",
+  }: {
+    getRootProps: (props?: Record<string, any>) => DropzoneRootProps;
+    getInputProps: (props?: Record<string, any>) => React.HTMLProps<HTMLInputElement>;
+  } = useDropzone({
+    onDrop
   });
-
 
   return (
     <div className="pdf-file-wrapper mt-12 mx-14">
@@ -72,7 +71,7 @@ const FileUpload: React.FC = () => {
         {...getRootProps()}
         className="upload-box border-2 cursor-pointer flex justify-center items-center border-dashed border-gray-300 p-4 mb-4"
       >
-        <input {...getInputProps()}/>
+        <input {...getInputProps()} />
         <img
           src={upload_img}
           alt=""

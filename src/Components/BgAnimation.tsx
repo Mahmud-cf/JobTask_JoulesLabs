@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import Konva from 'konva';
 
+interface CustomCircle extends Konva.Circle {
+  speed: number;
+}
+
 const BgAnimation: React.FC = () => {
   useEffect(() => {
     const width = window.innerWidth;
@@ -17,7 +21,7 @@ const BgAnimation: React.FC = () => {
     const colors = ['#76797b'];
     let colorIndex = 0;
 
-    const circles: Konva.Circle[] = [];
+    const circles: CustomCircle[] = [];
 
     for (let i = 0; i < 15; i++) {
       const color = colors[colorIndex++];
@@ -31,7 +35,7 @@ const BgAnimation: React.FC = () => {
         radius: 2.5,
         fill: color,
         name: i.toString(),
-      });
+      }) as CustomCircle; // Type assertion to CustomCircle
 
       circle.speed = 1 + Math.random() * 5; // Assign random speed to each circle
       circles.push(circle);
@@ -41,7 +45,7 @@ const BgAnimation: React.FC = () => {
     stage.add(circlesLayer);
     stage.add(tooltipLayer);
 
-    const anim = new Konva.Animation(frame => {
+    const anim = new Konva.Animation(() => {
       circles.forEach(circle => {
         if (circle.x() < -circle.radius() * 2) {
           circle.x(width);

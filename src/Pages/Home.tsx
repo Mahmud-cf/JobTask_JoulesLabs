@@ -1,4 +1,3 @@
-import React from 'react'
 import FileUpload from '../Components/FileUpload'
 import TextAdd from '../Components/TextAdd'
 import BgAnimation from '../Components/BgAnimation'
